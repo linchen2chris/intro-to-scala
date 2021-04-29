@@ -51,13 +51,13 @@ object IntroExercises {
   /**
     * How about this one?
     */
-  def bar(a: Int): Int = ???
+  def bar(a: Int): Int = a
 
   /**
     * What does the return type of this function tell us about
     * what it can do once implemented?
     */
-  def pandora(x: Int): Unit = ???
+  def pandora(x: Int): Unit = x
 
   /**
     * scala> timesTwoIfEven(4)
@@ -67,7 +67,14 @@ object IntroExercises {
     *
     * Important: Every `if` must have an `else`! Otherwise your function is not total.
     */
-  def timesTwoIfEven(x: Int): Int = ???
+  def timesTwoIfEven(x: Int): Int = {
+    val isEven: Int => Boolean = x => x%2 === 0
+    if(isEven(x)) {
+      x * 2
+    } else {
+      x
+    }
+  }
 
   /**
     * scala> showNumber(100)
