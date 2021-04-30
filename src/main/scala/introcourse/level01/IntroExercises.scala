@@ -82,7 +82,7 @@ object IntroExercises {
     *
     * Hint: Use string interpolation, e.g. s"$x"
     */
-  def showNumber(x: Int): String = ???
+  def showNumber(x: Int): String = "The number is $x"
 
   /**
     * Tuples
