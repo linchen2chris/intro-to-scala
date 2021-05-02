@@ -1,3 +1,4 @@
+# test
 # Intro to Scala Fundamentals
 
 [![Build Status](https://travis-ci.org/wjlow/intro-to-scala.svg?branch=master)](https://travis-ci.org/wjlow/intro-to-scala)
