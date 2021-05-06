@@ -49,7 +49,7 @@ object TypesExercises {
     **/
   def showPerson1(person: Person): String =
     person match {
-      case Person(name, age) => s"${???} is ${???} years old"
+      case Person(name, age) => s"${name} is ${age} years old"
     }
 
   /**
@@ -58,7 +58,7 @@ object TypesExercises {
     * Hint: Navigate the Person class' fields using the "." operator
     */
   def showPerson2(person: Person): String =
-    s"${???} is ${???} years old"
+    s"${person.name} is ${person.age} years old"
 
   /**
     * scala> val person = Person("Bob", 50)
@@ -70,7 +70,7 @@ object TypesExercises {
     *
     * Hint: Use the .copy method
     */
-  def changeName(newName: String, person: Person): Person = ???
+  def changeName(newName: String, person: Person): Person = person.copy(name = newName)
 
   /**
     * Let's look at another data type.
