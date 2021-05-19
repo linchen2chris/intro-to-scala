@@ -93,7 +93,7 @@ object TypesExercises {
     *
     * You can solve this like how you solved `showPerson1` or `showPerson2`.
     */
-  def showWallet(wallet: Wallet): String = ???
+  def showWallet(wallet: Wallet): String = "The wallet amout is ${wallet.amount}"
 
   /**
     * Here is another example of working with immutable values.
@@ -104,7 +104,7 @@ object TypesExercises {
     *
     * Hint: You need to calculate the new amount first.
     **/
-  def purchase(cost: Double, wallet: Wallet): Wallet = ???
+  def purchase(cost: Double, wallet: Wallet): Wallet = wallet.copy(amount = wallet.amount - cost)
 
   /**
     * *********************************************

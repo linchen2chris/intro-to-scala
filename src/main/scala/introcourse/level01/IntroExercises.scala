@@ -57,7 +57,7 @@ object IntroExercises {
     * What does the return type of this function tell us about
     * what it can do once implemented?
     */
-  def pandora(x: Int): Unit = x
+  def pandora(x: Int): Unit = ???
 
   /**
     * scala> timesTwoIfEven(4)
@@ -68,7 +68,7 @@ object IntroExercises {
     * Important: Every `if` must have an `else`! Otherwise your function is not total.
     */
   def timesTwoIfEven(x: Int): Int = {
-    val isEven: Int => Boolean = x => x%2 === 0
+    val isEven: Int => Boolean = x => x%2 == 0
     if(isEven(x)) {
       x * 2
     } else {
@@ -89,7 +89,7 @@ object IntroExercises {
     *
     * How can we group together `name` and `age` in a pair?
     */
-  def pair(name: String, age: Int): (String, Int) = {$name: age}
+  def pair(name: String, age: Int): (String, Int) = (name, age)
 
   /**
     * How can we extract the first element of a pair?
