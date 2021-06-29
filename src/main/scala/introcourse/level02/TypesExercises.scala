@@ -93,7 +93,7 @@ object TypesExercises {
     *
     * You can solve this like how you solved `showPerson1` or `showPerson2`.
     */
-  def showWallet(wallet: Wallet): String = "The wallet amout is ${wallet.amount}"
+  def showWallet(wallet: Wallet): String = s"The wallet amount is ${wallet.amount}"
 
   /**
     * Here is another example of working with immutable values.
@@ -138,7 +138,14 @@ object TypesExercises {
   /**
     * Implement the following showTrafficLightStr function to pass all your tests!
     */
-  def showTrafficLightStr(trafficLight: String): String = ???
+  def showTrafficLightStr(trafficLight: String): String =
+    trafficLight match {
+	    case "red" => s"The traffic light is $trafficLight"
+	    case "yellow" => s"The traffic light is $trafficLight"
+	    case "green" => s"The traffic light is $trafficLight"
+	    case "flash" => "The traffic light is flashing"
+      case _ => "Default"
+    }
 
 
   /**
@@ -200,7 +207,12 @@ object TypesExercises {
     * Hint: Use pattern matching
     **/
 
-  def showTrafficLight(trafficLight: TrafficLight): String = ???
+  def showTrafficLight(trafficLight: TrafficLight): String = trafficLight match {
+	  case Red => "The traffic light is red"
+    case Yellow => "The traffic light is yellow"
+    case Green => "The traffic light is green"
+    case Flashing => "flashing"
+  }
 
   /**
     * *********************************************************
@@ -219,5 +231,8 @@ object TypesExercises {
     *
     * 4. Fill in the unit test for this new scenario: "showTrafficLight should show Flashing"
     *
-    */
+   */
+
+  case object Flashing extends TrafficLight
+
 }

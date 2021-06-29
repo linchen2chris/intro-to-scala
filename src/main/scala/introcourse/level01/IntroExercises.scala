@@ -20,7 +20,6 @@ object IntroExercises {
     **/
   def add(x: Int, y: Int): Int = x + y
 
-
   /**
     * Let's write the curried version of the `add` function defined previously
     * scala> addCurried(1)(2)
@@ -82,7 +81,7 @@ object IntroExercises {
     *
     * Hint: Use string interpolation, e.g. s"$x"
     */
-  def showNumber(x: Int): String = "The number is $x"
+  def showNumber(x: Int): String = s"The number is $x"
 
   /**
     * Tuples
