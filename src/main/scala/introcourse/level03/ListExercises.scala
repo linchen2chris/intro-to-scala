@@ -39,7 +39,7 @@ object ListExercises {
     *
     * Hint: Refer the construction of list
     */
-  def prependToList[A](x: A, xs: List[A]): List[A] = ???
+  def prependToList[A](x: A, xs: List[A]): List[A] = x::xs
 
   /**
     * scala> appendToList(1, List(2, 3, 4))
@@ -47,7 +47,7 @@ object ListExercises {
     *
     * Hint: Use the :+ operator
     */
-  def appendToList[A](x: A, xs: List[A]): List[A] = ???
+  def appendToList[A](x: A, xs: List[A]): List[A] = xs:+x
 
   /**
     * `List` has an `.isEmpty` method that you can call to know whether an instance is empty or not.
@@ -69,7 +69,7 @@ object ListExercises {
     * }
     * ```
     */
-  def isEmptyList[A](xs: List[A]): Boolean = ???
+  def isEmptyList[A](xs: List[A]): Boolean = xs.last == Nil
 
   /**
     * scala> showListSize(List(1, 2, 3))
@@ -83,7 +83,12 @@ object ListExercises {
     *
     * Hint: Use pattern matching, string interpolation and length
     */
-  def showListSize[A](xs: List[A]): String = ???
+  def showListSize[A](xs: List[A]): String =
+    xs match {
+	    case head :: tail => s"This is a list of size ${xs.length}"
+      case Nil => "This is an empty list"
+    }
+
 
   /**
     * Mapping a function over a List
@@ -96,7 +101,7 @@ object ListExercises {
     *
     * Hint: Use .map
     **/
-  def addNumToEach(num: Int, nums: List[Int]): List[Int] = ???
+  def addNumToEach(num: Int, nums: List[Int]): List[Int] = nums.map(_ + num)
 
   /**
     * Filter a List
@@ -108,7 +113,7 @@ object ListExercises {
     *
     * Hint: Use .filter and '%' for mod operator
     */
-  def filterEven(nums: List[Int]): List[Int] = ???
+  def filterEven(nums: List[Int]): List[Int] = nums.filter(_ % 2 == 0)
 
   /**
     * Folds
@@ -132,7 +137,11 @@ object ListExercises {
     *
     * Hint: Use .foldLeft
     */
-  def product(nums: List[Int]): Int = ???
+  def product(nums: List[Int]): Int =
+    nums match {
+      case head :: next => nums.foldLeft(1)((a,b) => a*b)
+      case Nil => 1
+    }
 
   /**
     * scala> min(List(4, 6, 1))
@@ -145,8 +154,8 @@ object ListExercises {
     **/
   def min(nums: List[Int]): Int =
     nums match {
-      case Nil => ???
-      case head :: tail => ???
+      case Nil => Int.MinValue
+      case head :: tail => nums.foldLeft(head)((a, b) => if(a>b) b else a)
     }
 
   private[level03] val peopleList =
@@ -170,7 +179,11 @@ object ListExercises {
     *
     * Hint: Use pattern matching and .foldLeft
     */
-  def youngestPerson(persons: List[Person]): Person = ???
+  def youngestPerson(persons: List[Person]): Person =
+    persons match {
+      case head :: next => persons.foldLeft(head)((a, b)=> if(a.age > b.age) b else a)
+      case Nil => Person("Nobody", 0)
+    }
 
   /**
     * Return a list of pairs of a Person and their position in the `peopleList`.
@@ -192,7 +205,7 @@ object ListExercises {
     *
     * Hint: Use `zipWithIndex`
     */
-  def personWithIndex(people: List[Person]): List[(Person, Int)] = ???
+  def personWithIndex(people: List[Person]): List[(Person, Int)] = people.zipWithIndex.map(a => (a._1, a._2 + 1))
 
   /**
     * Log every nth person from the `peopleList` given an index `n`.
@@ -208,7 +221,12 @@ object ListExercises {
     * Hint: Use `personWithIndex`, `filter` and `showPerson`.
     *
     */
-  def showEveryNthPerson(n: Int, persons: List[Person]): List[String] = ???
+  def showEveryNthPerson(n: Int, persons: List[Person]): List[String] =
+    n match {
+	    case it if it <= 0 => persons.map(showPerson)
+      case it if it > persons.length => List[String]()
+      case _ => personWithIndex(persons).filter(x => x._2 % n == 0).map(a => showPerson(a._1))
+    }
 
   private[level03] def showPerson(person: Person): String =
     person match {
@@ -223,13 +241,7 @@ object ListExercises {
     * Rewrite this function that uses a mutable variable and for-loop in an immutable fashion
     */
   @SuppressWarnings(Array("org.wartremover.warts.Var"))
-  def getNames(persons: List[Person]): List[String] = {
-    var names: List[String] = Nil
-    for (person <- persons) {
-      names = names :+ person.name
-    }
-    names
-  }
+  def getNames(persons: List[Person]): List[String] = persons.map(_.name)
 
   /**
     * Rewrite this function that uses a mutable variable and for-loop in an immutable fashion
@@ -237,14 +249,7 @@ object ListExercises {
     * Return people aged >= 18
     */
   @SuppressWarnings(Array("org.wartremover.warts.Var"))
-  def getAdults(persons: List[Person]): List[Person] = {
-    var adults: List[Person] = Nil
-    for (person <- persons) {
-      if (person.age >= 18)
-        adults = adults :+ person
-    }
-    adults
-  }
+  def getAdults(persons: List[Person]): List[Person] = persons.filter(_.age >= 18)
 
 
   /**
@@ -269,4 +274,5 @@ object ListExercises {
     * sublists(l1) == List(List("a", "a", "a", "a"), List("b"), List("c", "c"), List("a", "a"), List("d"), List("e", "e", "e", "e"))
     */
   def sublists[A](xs: List[A]): List[List[A]] = ???
+
 }
