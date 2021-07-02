@@ -265,6 +265,7 @@ object ListExercises {
     }
   }
 
+  // better solution
    // xs.foldLeft[List[A]](Nil)((acc, x) => x :: acc)
 
   /**
