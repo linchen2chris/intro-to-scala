@@ -53,7 +53,11 @@ object EitherExercises {
     * scala> getName("")
     * > Left(EmptyName)
     **/
-  def getName(providedName: String): Either[AppError, String] = ???
+  def getName(providedName: String): Either[AppError, String] =
+    providedName match {
+	    case "" => Left(EmptyName)
+      case _ => Right(providedName)
+    }
 
   /**
     * Implement the function getAge that returns a Left with an InvalidAgeValue if the age provided can't
@@ -73,9 +77,12 @@ object EitherExercises {
     */
   def getAge(providedAge: String): Either[AppError, Int] =
     try {
-      ???
+      providedAge.toInt match {
+	      case a if 1 to 120 contains a => Right(a)
+        case b => Left(InvalidAgeRange(b))
+      }
     } catch {
-      case _: NumberFormatException => ???
+      case _: NumberFormatException => Left(InvalidAgeValue(providedAge))
     }
 
   /**
@@ -96,12 +103,20 @@ object EitherExercises {
     *
     * Hint: Use a for-comprehension to sequence the Eithers from getName and getAge
     */
-  def createPerson(name: String, age: String): Either[AppError, Person] = ???
+  def createPerson(name: String, age: String): Either[AppError, Person] =
+    for {
+      name <- getName(name)
+      age <- getAge(age)
+      person <- Right(Person(name, age))
+    } yield person
 
   /**
     * Reimplement createPerson using only `flatMap` and `map`
     */
- def createPerson2(name: String, age: String): Either[AppError, Person] = ???
+  def createPerson2(name: String, age: String): Either[AppError, Person] = {
+    getName(name).flatMap(a => getAge(age).flatMap(ag => Right(Person(a, ag))))
+
+  }
 
   /**
     * scala> makeNameUpperCase("Fred", "32")
@@ -119,7 +134,7 @@ object EitherExercises {
     * Hint: Use `createPerson` then use `map` and `copy`.
     *
     */
-  def makeNameUpperCase(name: String, age: String): Either[AppError, Person] = ???
+  def makeNameUpperCase(name: String, age: String): Either[AppError, Person] = createPerson(name, age).map(_.copy(name = name.toUpperCase()))
 
   /**
     * When handling errors, you usually only want to handle them at a single point in your application. That error
@@ -149,7 +164,14 @@ object EitherExercises {
     * }
     * ```
     */
-  def createPersonAndShow(name: String, age: String): String = ???
+  def createPersonAndShow(name: String, age: String): String = createPerson(name, age) match {
+    case Left(error) => error match {
+	    case EmptyName => "Empty name supplied"
+      case InvalidAgeValue(age) => s"Invalid age value supplied: $age"
+      case InvalidAgeRange(age) => s"Provided age must be between 1-120: $age"
+    }
+    case Right(person) => s"${person.name} is ${person.age}"
+  }
 
   /**
     * Implement the function createValidPeople that uses the personStringPairs List
@@ -161,7 +183,7 @@ object EitherExercises {
     * Hint: Use `map` and `collect`
     *
     */
-  def createValidPeople: List[Person] = ???
+  def createValidPeople: List[Person] = personStringPairs.map(pair => createPerson(pair._1, pair._2)).collect{case Right(value) => value}
 
   /**
     * Implement the function collectErrors that collects all the errors
@@ -175,5 +197,5 @@ object EitherExercises {
     *
     * Hint: Use `map` and `collect`
     */
-  def collectErrors: List[AppError] = ???
+  def collectErrors: List[AppError] = personStringPairs.map(p => createPerson(p._1, p._2)).collect{ case Left(error) => error }
 }
