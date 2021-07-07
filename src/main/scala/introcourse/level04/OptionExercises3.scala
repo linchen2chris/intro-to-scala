@@ -1,15 +1,21 @@
 package introcourse.level04
 
-import introcourse.level04.OptionExercises2.{HumanId, Job, JobId, findHumanById, findJobById, findJobIdByHumanId, findJobByHumanId}
+import introcourse.level04.OptionExercises2.{
+  HumanId,
+  Job,
+  JobId,
+  findHumanById,
+  findJobById,
+  findJobIdByHumanId,
+  findJobByHumanId
+}
 
-/**
-  * These exercises mirror the ones from `OptionExercises2.scala`,
+/** These exercises mirror the ones from `OptionExercises2.scala`,
   * they are for the purpose of teaching for-comprehension, which is very useful for working with `Option`.
   */
 object OptionExercises3 {
 
-  /**
-    * Rewrite this function using for-comprehension syntax.
+  /** Rewrite this function using for-comprehension syntax.
     *
     * scala> findJobIdByHumanIdUsingFor(1)
     * > None
@@ -18,15 +24,12 @@ object OptionExercises3 {
     * > Some(1)
     */
   def findJobIdByHumanIdUsingFor(humanId: HumanId): Option[JobId] =
-    for{
+    for {
       human <- findHumanById(humanId)
       jobId <- human.optJobId
-    }
-    yield jobId
+    } yield jobId
 
-
-  /**
-    * Rewrite this function using for-comprehension syntax.
+  /** Rewrite this function using for-comprehension syntax.
     *
     * scala> findJobByHumanIdUsingFor(2)
     * > Some(Job("Teacher", "Expert in their field"))
@@ -38,8 +41,7 @@ object OptionExercises3 {
     } yield job
   //     findJobIdByHumanId(humanId).flatMap(jobId => findJobById(jobId))
 
-  /**
-    * Rewrite this function using for-comprehension syntax.
+  /** Rewrite this function using for-comprehension syntax.
     *
     * scala> findJobNameByHumanIdUsingFor(2)
     * > Some("Teacher")
@@ -52,5 +54,5 @@ object OptionExercises3 {
       job <- findJobByHumanId(humanId)
       name <- Some(job.name)
     } yield name
-    // findJobByHumanId(humanId).map(job => job.name)
+  // findJobByHumanId(humanId).map(job => job.name)
 }
