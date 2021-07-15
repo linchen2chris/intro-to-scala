@@ -1,3 +1,4 @@
+sbt.version=1.3.13
 name := "intro-to-scala"
 
 version := "0.1"

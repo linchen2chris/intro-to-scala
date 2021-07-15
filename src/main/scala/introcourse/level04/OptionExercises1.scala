@@ -37,7 +37,7 @@ object OptionExercises1 {
     **/
   def safeMean(nums: List[Int]): Option[Double] = nums match {
 	  case Nil => None
-    case head :: next => Some(nums.sum.toDouble /nums.length)
+    case _ => Some(nums.sum.toDouble / nums.length)
   }
 
   /**

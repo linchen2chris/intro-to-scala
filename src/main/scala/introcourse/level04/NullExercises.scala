@@ -95,8 +95,8 @@ object NullExercises {
       newName: String
   ): Person = {
     val person = mkPersonOrNull(oldName, age);
-    if (person == null || newName == "") null
-    else changeName(newName, mkPersonOrNull(oldName, age))
+    if (person == null || newName.isEmpty ) null
+    else changeName(newName, person)
   }
 
   def changeName(newName: String, person: Person): Person =
