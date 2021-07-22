@@ -43,10 +43,10 @@ object ExceptionExercises {
     *
     * Hint: use the isEmpty method on String
     */
-  def getName(providedName: String) : String =
-    if(providedName.isEmpty())
-      throw EmptyNameException("hel")
-    else providedName
+  def getName(providedName: String) : String = ???
+    // if(providedName.isEmpty())
+    //   throw EmptyNameException("hel")
+    // else providedName
 
   /**
     * Implement the function getAge, so that it either accepts the supplied age
