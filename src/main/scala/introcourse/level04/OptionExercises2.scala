@@ -1,13 +1,11 @@
 package introcourse.level04
 
-/**
-  * These exercises simulate the "real-world" problem of retrieving records from a data store. You will learn to use `Option`s to represent
+/** These exercises simulate the "real-world" problem of retrieving records from a data store. You will learn to use `Option`s to represent
   * values that may or may not exist in the data store and also techniques to work with the `Option` type.
   */
 object OptionExercises2 {
 
-  /**
-    * The keyword `type` creates a type alias.
+  /** The keyword `type` creates a type alias.
     * This means we have created an alias for the type `Int` called `JobId`.
     * It serves as a light-weight way to give your types more meaning and have better documentation in code.
     */
@@ -30,30 +28,28 @@ object OptionExercises2 {
     3 -> Human("Timmy", Some(1024)) // jobId doesn't exist in jobsDatabase
   )
 
-  /**
-    * scala> findHumanById(1)
+  /** scala> findHumanById(1)
     * > Some(Human("Sally", None))
     *
     * scala> findHumanById(100)
     * > None
     *
     * Hint: Use `get` method on `humansDatabase` Map
-    **/
-  def findHumanById(humanId: HumanId): Option[Human] = humansDatabase.get(humanId)
+    */
+  def findHumanById(humanId: HumanId): Option[Human] =
+    humansDatabase.get(humanId)
 
-  /**
-    * scala> findJobById(1)
+  /** scala> findJobById(1)
     * > Some(Job("Teacher", "Expert in their field"))
     *
     * scala> findJobById(100)
     * > None
     *
     * Hint: Use `get` method on `jobsDatabase` Map
-    **/
+    */
   def findJobById(jobId: JobId): Option[Job] = jobsDatabase.get(jobId)
 
-  /**
-    * scala> findJobDescriptionGivenJobId1(1)
+  /** scala> findJobDescriptionGivenJobId1(1)
     * > Some("Expert in their field")
     *
     * scala> findJobDescriptionGivenJobId1(100)
@@ -63,12 +59,11 @@ object OptionExercises2 {
     */
   def findJobDescriptionGivenJobId1(jobId: JobId): Option[String] =
     findJobById(jobId) match {
-	    case None => None
-      case Some(value) => Some(value.description)
+      case None      => None
+      case Some(job) => Some(job.description)
     }
 
-  /**
-    * Same as above, but use .map instead
+  /** Same as above, but use .map instead
     *
     * If you see a `case None => None` in a pattern matching block,
     * you can always refactor it:
@@ -87,10 +82,9 @@ object OptionExercises2 {
     * ```
     */
   def findJobDescriptionGivenJobId2(jobId: JobId): Option[String] =
-    findJobById(jobId).map(a => a.description)
+    findJobById(jobId).map(_.description)
 
-  /**
-    * scala> findJobDescriptionGivenJobIdOrElse1(1)
+  /** scala> findJobDescriptionGivenJobIdOrElse1(1)
     * > "Expert in their field"
     *
     * scala> findJobDescriptionGivenJobIdOrElse1(100)
@@ -100,19 +94,18 @@ object OptionExercises2 {
     */
   def findJobDescriptionGivenJobIdOrElse1(jobId: JobId): String =
     findJobDescriptionGivenJobId1(jobId) match {
-	    case None => s"Job with id $jobId does not exist"
+      case None        => s"Job with id $jobId does not exist"
       case Some(value) => value
     }
 
-  /**
-    * Same as above, but use `findJobDescriptionGivenJobId1` then `getOrElse`
+  /** Same as above, but use `findJobDescriptionGivenJobId1` then `getOrElse`
     */
   def findJobDescriptionGivenJobIdOrElse2(jobId: JobId): String =
-    findJobDescriptionGivenJobId1(jobId).getOrElse(s"Job with id $jobId does not exist")
+    findJobDescriptionGivenJobId1(jobId).getOrElse(
+      s"Job with id $jobId does not exist"
+    )
 
-
-  /**
-    * scala> findJobIdByHumanId(1)
+  /** scala> findJobIdByHumanId(1)
     * > None
     *
     * scala> findJobIdByHumanId(2)
@@ -122,18 +115,18 @@ object OptionExercises2 {
     *
     * What's the type that you get after using `map`? What's different between that and the function's return type?
     */
-  def findJobIdByHumanId(humanId: HumanId): Option[JobId] = findHumanById(humanId).map(x => x.optJobId).flatten
+  def findJobIdByHumanId(humanId: HumanId): Option[JobId] =
+    findHumanById(humanId).map(x => x.optJobId).flatten
 
-  /**
-    * scala> findJobByHumanId(2)
+  /** scala> findJobByHumanId(2)
     * > Some(Job("Teacher", "Expert in their field"))
     *
     * Hint: Use `findJobIdByHumanId` and `findJobById`
     */
-  def findJobByHumanId(humanId: HumanId): Option[Job] = findJobIdByHumanId(humanId).map(findJobById).flatten
+  def findJobByHumanId(humanId: HumanId): Option[Job] =
+    findJobIdByHumanId(humanId).map(findJobById).flatten
 
-  /**
-    * Find the name of the `Job` that this `humanId` has
+  /** Find the name of the `Job` that this `humanId` has
     *
     * scala> findJobNameByHumanId(2)
     * > Some("Teacher")
@@ -143,6 +136,7 @@ object OptionExercises2 {
     *
     * Hint: Use `findJobByHumanId`
     */
-  def findJobNameByHumanId(humanId: HumanId): Option[String] = findJobByHumanId(humanId).map(_.name)
+  def findJobNameByHumanId(humanId: HumanId): Option[String] =
+    findJobByHumanId(humanId).map(_.name)
 
 }

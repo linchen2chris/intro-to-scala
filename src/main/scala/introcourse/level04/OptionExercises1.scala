@@ -131,7 +131,7 @@ object OptionExercises1 {
     * Hint: Use `mkPerson` and pattern matching
     **/
   def mkPersonThenChangeName(oldName: String, age: Int, newName: String): Option[Person] =
-    if (newName == "") None else
+    if (newName.isEmpty) None else
     mkPerson(oldName, age) match {
 	    case None => None
       case Some(a) => Some(a.copy(name=newName))
