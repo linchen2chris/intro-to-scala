@@ -43,10 +43,11 @@ object ExceptionExercises {
     *
     * Hint: use the isEmpty method on String
     */
-  def getName(providedName: String) : String = ???
-    // if(providedName.isEmpty())
-    //   throw EmptyNameException("hel")
-    // else providedName
+  def getName(providedName: String) : String = {
+    if(providedName.isEmpty())
+      throw new EmptyNameException("provided name is empty")
+    else providedName
+  }
 
   /**
     * Implement the function getAge, so that it either accepts the supplied age
@@ -67,9 +68,13 @@ object ExceptionExercises {
     */
   def getAge(providedAge: String) : Int =
       try {
-        ???
+        val age = providedAge.toInt
+        if(age > 0 && age < 121)
+          age
+        else
+          throw new InvalidAgeRangeException(s"provided age should be between 1-120: ${providedAge}")
       } catch {
-        case _: NumberFormatException => ???
+        case _: NumberFormatException => throw new InvalidAgeValueException(s"provided age is invalid: ${providedAge}")
       }
 
 
@@ -95,7 +100,8 @@ object ExceptionExercises {
     *
     * Hint: Use `getName` and `getAge` from above.
     */
-  def createPerson(name: String, age: String): Person = ???
+  def createPerson(name: String, age: String): Person =
+    Person(getName(name), getAge(age))
 
   /**
     * Implement the function createValidPeople to create a List of Person instances
@@ -113,11 +119,14 @@ object ExceptionExercises {
     personStringPairs.map {
       case (name, age) =>
         try {
-          ???
+          Some(createPerson(name, age))
         } catch {
-          case _: EmptyNameException       => ???
-          //handle in any other exception here
+          case _: EmptyNameException       => None
+          case _: InvalidAgeRangeException       => None
+          case _: InvalidAgeValueException       => None
         }
+    }.collect{
+      case Some(v) => v
     }
   }
 
@@ -138,7 +147,13 @@ object ExceptionExercises {
     */
   def collectErrors: List[Exception] = {
     personStringPairs.map {
-      case (name, age) => ???
-    }
+      case (name, age) =>
+        try {
+          createPerson(name, age)
+          None
+        } catch {
+          case e:Exception => Some(e)
+        }
+    }.collect{ case Some(e) => e}
   }
 }

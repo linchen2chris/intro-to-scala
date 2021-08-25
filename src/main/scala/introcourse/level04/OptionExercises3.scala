@@ -52,7 +52,6 @@ object OptionExercises3 {
   def findJobNameByHumanIdUsingFor(humanId: HumanId): Option[String] =
     for {
       job <- findJobByHumanId(humanId)
-      name <- Some(job.name)
-    } yield name
+    } yield job.name
   // findJobByHumanId(humanId).map(job => job.name)
 }
